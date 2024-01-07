@@ -1,0 +1,77 @@
+<div class=" transition-color wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" [ngClass]="!isAuthenticated ? 'border border-3 border-danger ' : ''">
+
+  <form class="login100-form"
+        autocomplete="off"
+        [formGroup]="loginForm"
+        >
+
+      <span class="login100-form-title p-b-49">
+          Login
+      </span>
+
+      <div class="wrap-input100 m-b-5">
+          <span class="label-input100">Correo</span>
+          <input class="input100"
+            type="email"
+            placeholder="Correo electrónico"
+            formControlName="email"
+            >
+            <!-- Directiva personalizada para manejo de errores!! -->
+            <span class="focus-input100"></span>
+      </div>
+      <!-- Mensaje de error -->
+      <small
+        class="transition-color"
+        CustomFormErrors
+        [color]="color"
+        [controlTouched] ="loginForm.get('email')?.touched"
+        [formControls]   ="loginForm.get('email')?.errors"
+        >
+      </small>
+
+      <div class="password-container wrap-input100 m-t-10 m-b-5">
+          <span class="label-input100">Contraseña</span>
+          <input class="input100"
+            type="password"
+            placeholder="Ingrese su contraseña"
+            formControlName="password"
+            #myPassword
+            >
+            <span class="focus-input100"></span>
+            <button class="show-password" (click)="showFullPassword()"><i [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash' "></i></button>
+      </div>
+      <small
+        class="transition-color "
+        CustomFormErrors
+        [color]="color"
+        [controlTouched] ="loginForm.get('password')?.touched"
+        [formControls]   ="loginForm.get('password')?.errors"
+        >
+      </small>
+
+      <div class="text-right p-t-8 p-b-31"></div>
+
+      <div class="container-login100-form-btn">
+          <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+              <button class="login100-form-btn"
+                      type="submit"
+                      (click)="logIn()"
+                      >
+                  Login
+              </button>
+          </div>
+      </div>
+
+      <div class="flex-col-c p-t-60">
+          <span class="txt1 p-b-17">
+              ¿No tienes cuenta?
+          </span>
+
+          <a routerLink="/auth/register" class="txt2">
+              Crear una aquí
+          </a>
+      </div>
+  </form>
+
+</div>

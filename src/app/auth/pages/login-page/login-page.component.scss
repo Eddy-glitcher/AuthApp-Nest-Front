@@ -1,0 +1,13 @@
+.transition-color{
+  transition: all 100ms ease-in-out;
+}
+
+.password-container{
+  position: relative;
+}
+
+.show-password{
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
