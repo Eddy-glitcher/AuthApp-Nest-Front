@@ -1,19 +1,15 @@
 import { Component, ElementRef, Renderer2, ViewChild, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { CustomFormErrorsDirective } from '../../directives/custom-form-errors.directive';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FormValidationsService } from '../../services/form-validations.service';
-import { CommonModule } from '@angular/common';
-import { AuthServiceService } from '../../services/auth-service.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 // SweetAlert
 import Swal from 'sweetalert2'
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
-  standalone: true,
-  imports: [ RouterLink, ReactiveFormsModule, CustomFormErrorsDirective, CommonModule, HttpClientModule ],
-  providers : [ AuthServiceService, HttpClient ],
+  standalone: false,
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })
@@ -22,8 +18,8 @@ export class LoginPageComponent {
   public fb          = inject(FormBuilder);
   public fvs         = inject(FormValidationsService);
   public ren         = inject(Renderer2);
-  public authService = inject(AuthServiceService);
-  public  router     = inject(Router);
+  public authService = inject(AuthService);
+  public router       = inject(Router);
   // Podemos usar injects en funciones para que las aplicaciones sean mas rápidas.
 
   @ViewChild('myPassword') myPassword!: ElementRef<HTMLElement>;
@@ -35,8 +31,8 @@ export class LoginPageComponent {
   isAuthenticated : boolean = true;
 
   loginForm  : FormGroup = this.fb.group({
-    email    : ['salito@hotmail.com', [Validators.required, Validators.pattern(this.fvs.emailPattern)]],
-    password : ['123456', [Validators.required]],
+    email    : ['jude@hotmail.com', [Validators.required, Validators.pattern(this.fvs.emailPattern)]],
+    password : ['judeballin5ñparis123', [Validators.required]],
   });
 
   logIn(): void{
@@ -45,7 +41,10 @@ export class LoginPageComponent {
     this.loginForm.markAllAsTouched();
 
     if(this.loginForm.valid){
-      this.authService.logIn(this.loginForm.value).subscribe({
+
+      const { email, password } = this.loginForm.value;
+
+      this.authService.login(email, password).subscribe({
         next  : (resp) => {
 
 
@@ -68,7 +67,7 @@ export class LoginPageComponent {
 
           Swal.fire({
             title: "Error!",
-            text: errorMessage,
+            text: errorMessage || 'Error al iniciar Sesión',
             icon: "error"
           });
 
