@@ -1,3 +1,3 @@
 export const environments = {
-  baseUrl : 'http://localhost:3000/auth'
+  baseUrl : 'https://authapp-nest-backend-eddy-glitcher.up.railway.app/auth'
 }
